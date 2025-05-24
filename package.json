@@ -1,0 +1,41 @@
+{
+  "name": "fullstack-auth-system",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Fullstack authentication system with NestJS backend and Astro frontend",
+  "keywords": [
+    "monorepo",
+    "turbo",
+    "nestjs",
+    "astro",
+    "react",
+    "authentication"
+  ],
+  "author": "Titux Metal",
+  "license": "MIT",
+  "packageManager": "yarn@4.9.1",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "start": "turbo run start",
+    "test": "turbo run test",
+    "test:watch": "turbo run test:watch",
+    "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
+    "format": "echo 'Format placeholder'",
+    "clean": "turbo run clean",
+    "reset": "yarn clean && yarn install"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "turbo": "^2.5.3"
+  },
+  "engines": {
+    "node": ">=22.15.1",
+    "yarn": ">=4.9.1"
+  }
+}
