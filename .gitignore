@@ -4,3 +4,15 @@ node_modules/
 
 # custom config files
 .yarnrc.yml
+
+# turbo
+.turbo
+
+# build
+dist
+
+# coverage
+coverage
+
+# astro
+.astro
