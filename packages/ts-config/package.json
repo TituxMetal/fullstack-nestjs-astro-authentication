@@ -1,0 +1,21 @@
+{
+  "name": "@auth-system/ts-config",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared TypeScript configuration for the authentication system monorepo",
+  "main": "tsconfig.json",
+  "exports": {
+    ".": "./tsconfig.json",
+    "./base": "./tsconfig.base.json"
+  },
+  "files": [
+    "tsconfig.json",
+    "tsconfig.base.json"
+  ],
+  "dependencies": {
+    "typescript": "^5.7.3"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

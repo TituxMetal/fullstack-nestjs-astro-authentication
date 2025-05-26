@@ -1,0 +1,26 @@
+{
+  "extends": "@auth-system/ts-config",
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "verbatimModuleSyntax": false,
+    // "allowSyntheticDefaultImports": true,
+    // "sourceMap": true,
+    // "incremental": true,
+    // "skipLibCheck": true,
+    "strict": true,
+    "noEmit": false,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "paths": {
+      "~/*": ["src/*"],
+      "@auth-system/types": ["../../packages/shared-types/src"],
+      "@auth-system/types/*": ["../../packages/shared-types/src/*"]
+    }
+  },
+  "include": ["src/**/*", "test/**/*"],
+  "exclude": ["node_modules", "dist", "coverage", ".turbo"]
+}
