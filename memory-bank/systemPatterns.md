@@ -58,25 +58,32 @@ https://apprendre-la-programmation.net/architecture-hexagonale:
 - **External Services:** Email, JWT token generation
 - **Configuration:** Database, JWT secrets
 
-### NestJS Module Structure
+### NestJS Module Structure (Simplified)
 
 ```
 src/
-├── modules/
-│   ├── auth/
-│   │   ├── domain/
-│   │   ├── application/
-│   │   └── infrastructure/
-│   └── user/
-│       ├── domain/
-│       ├── application/
-│       └── infrastructure/
-├── shared/
+├── auth/                    # Direct module access (simplified)
+│   ├── domain/             # Entities, Value Objects, Interfaces
+│   ├── application/        # Use Cases, Services, DTOs
+│   └── infrastructure/     # Controllers, Repositories
+├── user/                   # Direct module access (simplified)
 │   ├── domain/
 │   ├── application/
 │   └── infrastructure/
-└── main.ts
+├── shared/                 # Shared across modules
+│   ├── domain/
+│   ├── application/
+│   └── infrastructure/
+├── main.ts
+└── app.module.ts
 ```
+
+**Architecture Benefits:**
+
+- ✅ Maintains hexagonal architecture integrity
+- ✅ Reduces folder navigation depth (removed modules/ level)
+- ✅ Easier to learn and work with
+- ✅ Clear separation of concerns preserved
 
 ## Frontend Architecture: Component-Based
 
