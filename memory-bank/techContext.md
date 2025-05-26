@@ -12,8 +12,8 @@
 
 #### Core Framework
 
-- **NestJS:** TypeScript framework for Node.js
-- **Node.js:** Runtime environment (LTS version recommended)
+- **NestJS:** v11.1.1 (latest stable) - TypeScript framework for Node.js
+- **Node.js:** v22.15.1 LTS (managed with nvm)
 - **TypeScript:** Type-safe JavaScript development
 
 #### Database & ORM
@@ -40,13 +40,14 @@
 
 #### Core Framework
 
-- **Astro:** Modern static site builder with hydration
+- **Astro:** v5.8.0 (latest stable) - Modern SSR framework with hydration
 - **React:** UI component library
 - **TypeScript:** Type-safe development
 
 #### Styling & UI
 
-- **Tailwind CSS V4:** Utility-first CSS framework (handles all CSS processing)
+- **Tailwind CSS:** v4.1.5 (latest stable) - Utility-first CSS framework (handles all CSS
+  processing)
 
 #### Forms & Validation
 
