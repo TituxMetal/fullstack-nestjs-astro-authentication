@@ -3,14 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "description": "Shared TypeScript types for authentication system",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "mkdir -p dist && echo 'Build types placeholder'",
-    "dev": "echo 'Dev types placeholder'",
-    "lint": "echo 'Lint types placeholder'",
-    "type-check": "echo 'Type-check types placeholder'",
-    "clean": "rm -rf dist .turbo && echo 'Clean types placeholder'"
+    "build": "tsc -p tsconfig.json",
+    "dev": "yarn build --watch",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist .turbo tsconfig.tsbuildinfo"
   },
   "devDependencies": {
     "@auth-system/eslint-config": "workspace:*"

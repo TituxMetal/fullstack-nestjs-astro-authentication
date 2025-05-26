@@ -3,15 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "description": "NestJS backend with hexagonal architecture for authentication system",
+  "type": "module",
   "scripts": {
-    "build": "mkdir -p dist && echo 'Backend build placeholder'",
-    "dev": "echo 'Backend dev placeholder'",
-    "start": "echo 'Backend start placeholder'",
-    "test": "mkdir -p coverage && echo 'Backend test placeholder'",
-    "test:watch": "echo 'Backend test:watch placeholder'",
-    "lint": "echo 'Backend lint placeholder'",
-    "type-check": "echo 'Backend type-check placeholder'",
-    "clean": "rm -rf coverage dist .turbo && echo 'Backend clean placeholder'"
+    "build": "tsc -p tsconfig.json && echo 'Backend build placeholder - will be updated in Issue #9'",
+    "dev": "echo 'Backend dev placeholder - will be updated in Issue #9' && tsc --watch -p tsconfig.json",
+    "start": "echo 'Backend start placeholder - will be updated in Issue #9'",
+    "test": "mkdir -p coverage && echo 'Backend test placeholder - will be updated in Issue #9'",
+    "test:watch": "echo 'Backend test:watch placeholder - will be updated in Issue #9'",
+    "lint": "eslint . --fix",
+    "lint:check": "eslint .",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf coverage dist .turbo"
   },
   "devDependencies": {
     "@auth-system/eslint-config": "workspace:*",

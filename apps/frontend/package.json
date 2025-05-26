@@ -5,17 +5,19 @@
   "description": "Astro frontend with React integration for authentication system",
   "type": "module",
   "scripts": {
-    "build": "mkdir -p dist && echo 'Frontend build placeholder'",
-    "dev": "mkdir -p .astro && echo 'Frontend dev placeholder'",
-    "start": "echo 'Frontend start placeholder'",
-    "test": "mkdir -p coverage && echo 'Frontend test placeholder'",
-    "test:watch": "echo 'Frontend test:watch placeholder'",
-    "lint": "echo 'Frontend lint placeholder'",
-    "type-check": "echo 'Frontend type-check placeholder'",
-    "clean": "rm -rf coverage dist .astro .turbo && echo 'Frontend clean placeholder'"
+    "build": "tsc -p tsconfig.json && echo 'Frontend build placeholder - will be updated in Issue #9'",
+    "dev": "mkdir -p .astro && echo 'Frontend dev placeholder - will be updated in Issue #9' && tsc --watch -p tsconfig.json",
+    "start": "echo 'Frontend start placeholder - will be updated in Issue #9'",
+    "test": "mkdir -p coverage && echo 'Frontend test placeholder - will be updated in Issue #9'",
+    "test:watch": "echo 'Frontend test:watch placeholder - will be updated in Issue #9'",
+    "lint": "eslint . --fix",
+    "lint:check": "eslint .",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf coverage dist .astro .turbo"
   },
   "devDependencies": {
     "@auth-system/eslint-config": "workspace:*",
+    "@auth-system/ts-config": "workspace:*",
     "@auth-system/types": "workspace:*"
   }
 }
