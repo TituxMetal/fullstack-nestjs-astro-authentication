@@ -1,0 +1,3 @@
+{
+  "extends": "@auth-system/ts-config/base"
+}
