@@ -1,5 +1,69 @@
 # System Patterns: Architecture & Design
 
+## 🔍 Critical Discovery: NestJS Monorepo Compilation Behavior
+
+### **The Discovery**
+
+During Phase 1 implementation, we uncovered fundamental NestJS compilation behavior in monorepos:
+
+**Core Principle:** NestJS CLI detects cross-workspace imports and changes compilation strategy
+
+```mermaid
+flowchart TD
+    A[Cross-workspace Import EXISTS] --> B[NestJS creates FULL monorepo structure]
+    B --> C["dist/apps/backend/src/main.js"]
+
+    D[NO Cross-workspace Imports] --> E[NestJS creates FLAT structure]
+    E --> F["dist/main.js"]
+
+    G[entryFile Configuration] --> H{Which Structure?}
+    H -->|Full Structure| I["entryFile: apps/backend/src/main"]
+    H -->|Flat Structure| J["entryFile: main"]
+```
+
+### **Why This Happens**
+
+- **NestJS CLI** automatically detects cross-workspace dependencies
+- When found → "This is a monorepo context" → Creates full project structure in dist/
+- When not found → "This is a single project" → Creates flat structure in dist/
+- **The `entryFile` in nest-cli.json must match the structure NestJS decides to create**
+
+### **The Working Configuration**
+
+```json
+// nest-cli.json - MONOREPO COMPATIBLE
+{
+  "entryFile": "apps/backend/src/main",  // ← Handles full structure
+  "sourceRoot": "src",                   // ← Relative to workspace
+  "preserveWatchOutput": true
+}
+
+// tsconfig.json - PATH ALIASES
+{
+  "baseUrl": "./",                       // ← Relative to workspace root
+  "paths": {
+    "~/*": ["src/*"],                    // ← Local aliases work
+    "@auth-system/types": ["../../packages/shared-types/src/index"]
+  }
+}
+```
+
+### **Critical Insights**
+
+1. **Always maintain cross-workspace imports** - This ensures consistent monorepo behavior
+2. **entryFile must match compilation output** - Not the source structure
+3. **baseUrl should be workspace-relative** - Not nested paths
+4. **This behavior is by design** - NestJS adapts to monorepo context automatically
+
+### **Validation Commands**
+
+```bash
+# Test compilation structure
+yarn build && find dist -name "main.js"
+
+# Should output: dist/apps/backend/src/main.js (with cross-workspace imports)
+```
+
 ## Backend Architecture: Hexagonal Pattern
 
 ### Core Principles
