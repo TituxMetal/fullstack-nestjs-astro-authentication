@@ -1,0 +1,1 @@
+export * from './IAuthUser.interface'

@@ -1,6 +1,13 @@
-// Placeholder main file for backend
-// Will be replaced with actual NestJS application in Issue #9
+import { NestFactory } from '@nestjs/core'
+import type { NestExpressApplication } from '@nestjs/platform-express'
 
-export const main = (): void => {
-  console.log('Backend placeholder')
+import { AppModule } from '~/app.module'
+
+const bootstrap = async () => {
+  const app = await NestFactory.create<NestExpressApplication>(AppModule)
+  const port = process.env.PORT || 3000
+
+  await app.listen(port)
 }
+
+bootstrap()

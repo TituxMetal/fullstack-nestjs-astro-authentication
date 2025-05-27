@@ -2,6 +2,7 @@
   "extends": "@auth-system/ts-config",
   "compilerOptions": {
     "module": "commonjs",
+    "target": "ES2017",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -14,10 +15,15 @@
     "strict": true,
     "noEmit": false,
     "outDir": "./dist",
+    // "rootDir": "./src",
     "baseUrl": "./",
+    // "baseUrl": "./apps/backend/",
     "paths": {
       "~/*": ["src/*"],
-      "@auth-system/types": ["../../packages/shared-types/src"],
+      // "~auth/*": ["src/auth/*"],
+      // "~users/*": ["src/users/*"],
+      // "~shared/*": ["src/shared/*"],
+      "@auth-system/types": ["../../packages/shared-types/src/index"],
       "@auth-system/types/*": ["../../packages/shared-types/src/*"]
     }
   },
