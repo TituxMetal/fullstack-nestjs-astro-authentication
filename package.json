@@ -29,8 +29,8 @@
     "type-check": "turbo run type-check",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "clean": "turbo run clean",
-    "reset": "yarn clean && yarn install"
+    "clean": "turbo run clean && rm -rf .turbo",
+    "reset": "yarn clean && rm -rf node_modules && yarn install"
   },
   "devDependencies": {
     "@types/node": "^22.15.21",
