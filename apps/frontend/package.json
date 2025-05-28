@@ -5,19 +5,34 @@
   "description": "Astro frontend with React integration for authentication system",
   "type": "module",
   "scripts": {
-    "build": "tsc -p tsconfig.json && echo 'Frontend build placeholder - will be updated in Issue #9'",
-    "dev": "mkdir -p .astro && echo 'Frontend dev placeholder - will be updated in Issue #9' && tsc --watch -p tsconfig.json",
-    "start": "echo 'Frontend start placeholder - will be updated in Issue #9'",
+    "build": "astro build",
+    "dev": "astro dev",
+    "start": "astro preview",
     "test": "mkdir -p coverage && echo 'Frontend test placeholder - will be updated in Issue #9'",
     "test:watch": "echo 'Frontend test:watch placeholder - will be updated in Issue #9'",
     "lint": "eslint . --fix",
     "lint:check": "eslint .",
     "type-check": "tsc --noEmit",
-    "clean": "rm -rf coverage dist .astro .turbo"
+    "clean": "rm -rf node_modules coverage dist .astro .turbo"
+  },
+  "dependencies": {
+    "@astrojs/node": "^9.2.2",
+    "@astrojs/react": "^4.3.0",
+    "astro": "^5.8.0",
+    "astro-icon": "^1.1.5",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-icons": "^5.5.0"
   },
   "devDependencies": {
     "@auth-system/eslint-config": "workspace:*",
     "@auth-system/ts-config": "workspace:*",
-    "@auth-system/types": "workspace:*"
+    "@auth-system/types": "workspace:*",
+    "@tailwindcss/vite": "^4.1.7",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.5",
+    "@vitejs/plugin-react": "^4.5.0",
+    "tailwindcss": "^4.1.7",
+    "vite": "^6.3.5"
   }
 }

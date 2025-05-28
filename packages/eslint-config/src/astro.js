@@ -4,9 +4,13 @@ module.exports = {
   extends: [
     'plugin:astro/recommended',
     'plugin:astro/jsx-a11y-recommended',
-    'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended'
   ],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    project: 'tsconfig.json',
+    sourceType: 'module'
+  },
   plugins: ['import', '@typescript-eslint/eslint-plugin', 'prettier'],
   rules: {
     'arrow-body-style': ['error', 'as-needed'],
@@ -54,7 +58,7 @@ module.exports = {
       }
     ]
   },
-  ignorePatterns: ['.eslintrc.js', 'eslint.config.cjs', 'dist/**', 'coverage/**', '.turbo/**'],
+  ignorePatterns: ['astro.config.mjs', 'eslint.config.cjs', 'dist/**', 'coverage/**', '.turbo/**'],
   overrides: [
     {
       files: ['*.astro'],
