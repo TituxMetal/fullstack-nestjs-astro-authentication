@@ -21,7 +21,7 @@
 - ✅ **Issue #9 PLANNING COMPLETE:** Comprehensive implementation plan finalized with architectural
   decisions
 - ✅ **PHASE 1 COMPLETE:** NestJS backend framework fully configured and working
-- ✅ **PHASE 2 COMPLETE:** Astro SSR + React + Tailwind V4 with basic test components
+- ✅ **PHASE 2 COMPLETE:** Astro SSR + React + Tailwind with basic test components
 - 🔍 **CRITICAL DISCOVERY:** NestJS compilation behavior documented
 
 ## Next Immediate Steps
@@ -30,10 +30,10 @@
 
 **Phase 1 Status: ✅ COMPLETE** **Phase 2 Status: ✅ COMPLETE**
 
-- ✅ **Frontend Framework Setup:** Astro SSR + React + Tailwind 4.1.7 - COMPLETE
+- ✅ **Frontend Framework Setup:** Astro SSR + React + Tailwind - COMPLETE
 - ✅ **Astro Configuration:** SSR with node adapter, security settings, build optimizations
 - ✅ **React Integration:** React 19.1.0 with proper JSX and component architecture
-- ✅ **Tailwind V4:** Modern Vite plugin approach with custom component classes
+- ✅ **Tailwind:** Modern Vite plugin approach with custom component classes
 - ✅ **UI Implementation:** Basic test components (MainLayout, NavBar, Footer, Welcome) for React
   integration validation
 - ✅ **Cross-workspace Integration:** @auth-system/types imports working perfectly
@@ -43,15 +43,24 @@
 **Phase 3: Ready to Execute**
 
 - 🚀 **Database Setup:** Prisma ORM in backend workspace
-- Configure Prisma with SQLite for development and production
-- Create User schema with authentication fields
-- Set up database migrations and seeding
-- Implement Prisma client integration
-- Add database scripts to package.json
+- Install Prisma and configure SQLite with defaults
+- Create User schema matching shared-types interface (plus password field)
+- Generate and run initial migration
+- Install Prisma client in backend
+- Test that we can connect and query the database
+
+**Phase 4: Testing Setup & Integration Validation**
+
+- Configure Jest for NestJS backend with TypeScript support
+- Configure Vitest for Astro frontend with React support
+- Set up test utilities and helpers (test database, mocks)
+- Write basic smoke tests for each framework
+- Validate ESLint rules work with test files
+- Update Turbo pipeline with test commands
+- Complete Issue #3 validation with real framework code
 
 **Remaining Phases:**
 
-- Phase 4: Integration & Issue #3 validation
 - Phase 5: Minimal framework validation (JWT implementation)
 
 **User's Modern Preferences:**
@@ -193,7 +202,7 @@ Based on the requirements, here are recommended enhancements:
 ### Technology Choices
 
 - **Astro + React:** Great balance of static generation and interactivity
-- **Tailwind V4:** Utility-first approach speeds development
+- **Tailwind:** Utility-first approach speeds development
 - **Prisma:** Type-safe database operations reduce bugs
 - **Turbo:** Efficient build caching and task running
 
