@@ -1,4 +1,5 @@
-import { Controller, Get, Logger } from '@nestjs/common'
+import { CreateUserDto, User } from '@auth-system/types'
+import { Body, Controller, Get, Logger, Post } from '@nestjs/common'
 
 import { UserService } from '~/users/application'
 
@@ -8,19 +9,30 @@ export class UserController {
 
   constructor(private readonly userService: UserService) {}
 
+  // For demo purposes
   @Get()
-  async getUser() {
-    const user = this.userService.getUsers()
-    this.logger.log('user from controller', user)
+  async getUsers(): Promise<User[]> {
+    const users = await this.userService.getUsers()
+    this.logger.log('users from controller', users)
 
-    return user
+    return users
   }
 
+  // TODO: remove this endpoint
   @Get('auth')
   getAuthUser() {
     const authUser = this.userService.getAuthUser()
     this.logger.log('authUser from controller', authUser)
 
     return authUser
+  }
+
+  // For demo purposes
+  @Post('create')
+  async createUser(@Body() user: CreateUserDto): Promise<User> {
+    const newUser = await this.userService.createUser(user)
+    this.logger.log('newUser from controller', newUser)
+
+    return newUser
   }
 }

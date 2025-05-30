@@ -5,6 +5,10 @@ node_modules/
 # custom config files
 .yarnrc.yml
 
+# environment variables
+.env*
+!.env.example
+
 # turbo
 .turbo
 
@@ -12,11 +16,11 @@ node_modules/
 dist
 .astro
 
+# prisma
+*.db*
+
 # TypeScript incremental compilation
 *.tsbuildinfo
 
 # coverage
 coverage
-
-# astro
-.astro
