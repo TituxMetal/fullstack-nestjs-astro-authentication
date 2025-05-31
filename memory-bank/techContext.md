@@ -12,8 +12,8 @@
 
 #### Core Framework
 
-- **NestJS:** TypeScript framework for Node.js
-- **Node.js:** Runtime environment (LTS version recommended)
+- **NestJS:** v11.1.1 (latest stable) - TypeScript framework for Node.js
+- **Node.js:** v22.15.1 LTS (managed with nvm)
 - **TypeScript:** Type-safe JavaScript development
 
 #### Database & ORM
@@ -40,13 +40,14 @@
 
 #### Core Framework
 
-- **Astro:** Modern static site builder with hydration
+- **Astro:** v5.8.0 (latest stable) - Modern SSR framework with hydration
 - **React:** UI component library
 - **TypeScript:** Type-safe development
 
 #### Styling & UI
 
-- **Tailwind CSS V4:** Utility-first CSS framework (handles all CSS processing)
+- **Tailwind CSS:** v4.1.5 (latest stable) - Utility-first CSS framework (handles all CSS
+  processing)
 
 #### Forms & Validation
 
@@ -100,7 +101,7 @@
 
 ```env
 # Database
-DATABASE_URL="postgresql://user:password@localhost:5432/authdb"
+DATABASE_URL="file:./dev.db"
 
 # JWT
 JWT_SECRET="your-super-secret-jwt-key"
@@ -131,10 +132,10 @@ NODE_ENV="development"
 ```json
 {
   "dependencies": {
-    "@nestjs/common": "^10.x",
-    "@nestjs/core": "^10.x",
-    "@nestjs/platform-express": "^10.x",
-    "@nestjs/jwt": "^10.x",
+    "@nestjs/common": "^11.x",
+    "@nestjs/core": "^11.x",
+    "@nestjs/platform-express": "^11.x",
+    "@nestjs/jwt": "^11.x",
     "@prisma/client": "^5.x",
     "argon2": "^0.x",
     "cookie-parser": "^1.x",
@@ -142,7 +143,7 @@ NODE_ENV="development"
     "class-transformer": "^0.x"
   },
   "devDependencies": {
-    "@nestjs/testing": "^10.x",
+    "@nestjs/testing": "^11.x",
     "prisma": "^5.x",
     "jest": "^29.x",
     "supertest": "^6.x",
@@ -158,9 +159,9 @@ NODE_ENV="development"
 ```json
 {
   "dependencies": {
-    "astro": "^4.x",
-    "react": "^18.x",
-    "react-dom": "^18.x",
+    "astro": "^5.x",
+    "react": "^19.x",
+    "react-dom": "^19.x",
     "react-hook-form": "^7.x",
     "@hookform/resolvers": "^3.x",
     "zod": "^3.x"
@@ -169,8 +170,8 @@ NODE_ENV="development"
     "@astro/react": "^3.x",
     "@astro/tailwind": "^5.x",
     "tailwindcss": "^4.x",
-    "@types/react": "^18.x",
-    "@types/react-dom": "^18.x",
+    "@types/react": "^19.x",
+    "@types/react-dom": "^19.x",
     "typescript": "^5.x"
   }
 }
@@ -210,12 +211,12 @@ project-root/
 
 ### Development Commands
 
-- **Start Development:** `npm run dev` (both apps)
-- **Build All:** `npm run build`
-- **Run Tests:** `npm run test`
-- **Lint Code:** `npm run lint`
-- **Database Migration:** `npx prisma migrate dev`
-- **Generate Types:** `npx prisma generate`
+- **Start Development:** `yarn dev` (both apps)
+- **Build All:** `yarn build`
+- **Run Tests:** `yarn test`
+- **Lint Code:** `yarn lint`
+- **Database Migration:** `yarn dlx prisma migrate dev`
+- **Generate Types:** `yarn dlx prisma generate`
 
 ## Technical Constraints & Considerations
 
@@ -252,7 +253,7 @@ project-root/
 
 ### Production Environment
 
-- **Database:** Managed PostgreSQL
+- **Database:** SQLite (development and production)
 - **Backend:** Node.js hosting (Vercel, Railway, etc.)
 - **Frontend:** Static hosting (Vercel, Netlify, etc.)
 - **Environment:** Secure secret management

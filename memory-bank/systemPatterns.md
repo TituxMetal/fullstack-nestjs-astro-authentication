@@ -1,5 +1,69 @@
 # System Patterns: Architecture & Design
 
+## 🔍 Critical Discovery: NestJS Monorepo Compilation Behavior
+
+### **The Discovery**
+
+During Phase 1 implementation, we uncovered fundamental NestJS compilation behavior in monorepos:
+
+**Core Principle:** NestJS CLI detects cross-workspace imports and changes compilation strategy
+
+```mermaid
+flowchart TD
+    A[Cross-workspace Import EXISTS] --> B[NestJS creates FULL monorepo structure]
+    B --> C["dist/apps/backend/src/main.js"]
+
+    D[NO Cross-workspace Imports] --> E[NestJS creates FLAT structure]
+    E --> F["dist/main.js"]
+
+    G[entryFile Configuration] --> H{Which Structure?}
+    H -->|Full Structure| I["entryFile: apps/backend/src/main"]
+    H -->|Flat Structure| J["entryFile: main"]
+```
+
+### **Why This Happens**
+
+- **NestJS CLI** automatically detects cross-workspace dependencies
+- When found → "This is a monorepo context" → Creates full project structure in dist/
+- When not found → "This is a single project" → Creates flat structure in dist/
+- **The `entryFile` in nest-cli.json must match the structure NestJS decides to create**
+
+### **The Working Configuration**
+
+```json
+// nest-cli.json - MONOREPO COMPATIBLE
+{
+  "entryFile": "apps/backend/src/main",  // ← Handles full structure
+  "sourceRoot": "src",                   // ← Relative to workspace
+  "preserveWatchOutput": true
+}
+
+// tsconfig.json - PATH ALIASES
+{
+  "baseUrl": "./",                       // ← Relative to workspace root
+  "paths": {
+    "~/*": ["src/*"],                    // ← Local aliases work
+    "@auth-system/types": ["../../packages/shared-types/src/index"]
+  }
+}
+```
+
+### **Critical Insights**
+
+1. **Always maintain cross-workspace imports** - This ensures consistent monorepo behavior
+2. **entryFile must match compilation output** - Not the source structure
+3. **baseUrl should be workspace-relative** - Not nested paths
+4. **This behavior is by design** - NestJS adapts to monorepo context automatically
+
+### **Validation Commands**
+
+```bash
+# Test compilation structure
+yarn build && find dist -name "main.js"
+
+# Should output: dist/apps/backend/src/main.js (with cross-workspace imports)
+```
+
 ## Backend Architecture: Hexagonal Pattern
 
 ### Core Principles
@@ -58,25 +122,32 @@ https://apprendre-la-programmation.net/architecture-hexagonale:
 - **External Services:** Email, JWT token generation
 - **Configuration:** Database, JWT secrets
 
-### NestJS Module Structure
+### NestJS Module Structure (Simplified)
 
 ```
 src/
-├── modules/
-│   ├── auth/
-│   │   ├── domain/
-│   │   ├── application/
-│   │   └── infrastructure/
-│   └── user/
-│       ├── domain/
-│       ├── application/
-│       └── infrastructure/
-├── shared/
+├── auth/                    # Direct module access (simplified)
+│   ├── domain/             # Entities, Value Objects, Interfaces
+│   ├── application/        # Use Cases, Services, DTOs
+│   └── infrastructure/     # Controllers, Repositories
+├── user/                   # Direct module access (simplified)
 │   ├── domain/
 │   ├── application/
 │   └── infrastructure/
-└── main.ts
+├── shared/                 # Shared across modules
+│   ├── domain/
+│   ├── application/
+│   └── infrastructure/
+├── main.ts
+└── app.module.ts
 ```
+
+**Architecture Benefits:**
+
+- ✅ Maintains hexagonal architecture integrity
+- ✅ Reduces folder navigation depth (removed modules/ level)
+- ✅ Easier to learn and work with
+- ✅ Clear separation of concerns preserved
 
 ## Frontend Architecture: Component-Based
 
@@ -182,3 +253,98 @@ interface AuthContext {
 - CSRF protection via SameSite cookies
 - Secure form handling
 - Input validation
+
+## ✅ Implemented: Repository Pattern with Prisma (Phase 3)
+
+### **Good Hexagonal Implementation Achieved**
+
+Phase 3 successfully implemented solid hexagonal architecture with the repository pattern:
+
+```
+Domain Layer (~/users/domain/):
+├── repositories/
+│   └── IUser.repository.ts          # 🎯 CONTRACT (defines operations)
+
+Application Layer (~/users/application/):
+└── user.service.ts                  # 🎯 USES interface (no Prisma knowledge)
+
+Infrastructure Layer:
+├── ~/shared/infrastructure/database/
+│   ├── prisma.service.ts           # 🎯 Database lifecycle management
+│   └── database.module.ts          # 🎯 Global database module
+└── ~/users/infrastructure/
+    ├── DbUser.repository.ts        # 🎯 IMPLEMENTS interface using Prisma
+    └── user.module.ts              # 🎯 DI configuration
+```
+
+### **Implementation Details**
+
+#### Domain Interface (Contract Definition)
+
+```typescript
+// IUserRepository defines WHAT operations are available
+export interface IUserRepository {
+  getUsers(): Promise<IUser[]>
+  createUser(user: CreateUserDto): Promise<IUser>
+}
+```
+
+#### Application Service (Clean Business Logic)
+
+```typescript
+// UserService depends on interface
+export class UserService {
+  constructor(@Inject('IUserRepository') private readonly userRepository: IUserRepository) {}
+
+  async getUsers(): Promise<IUser[]> {
+    return await this.userRepository.getUsers() // Pure business logic
+  }
+}
+```
+
+#### Infrastructure Implementation (Technical Details)
+
+```typescript
+// DbUserRepository implements the contract using Prisma
+export class DbUserRepository implements IUserRepository {
+  constructor(private readonly prisma: PrismaService) {}
+
+  async getUsers(): Promise<User[]> {
+    return this.prisma.user.findMany({
+      /* Prisma specifics */
+    })
+  }
+}
+```
+
+#### Dependency Injection (Clean Wiring)
+
+```typescript
+// Perfect NestJS provider binding
+providers: [
+  UserService,
+  {
+    provide: 'IUserRepository',
+    useClass: DbUserRepository
+  }
+]
+```
+
+### **Architecture Benefits Realized**
+
+- ✅ **Dependency Inversion:** Application defines contracts, infrastructure implements
+- ✅ **Testability:** Application can be tested with mocked repositories
+- ✅ **Flexibility:** Can swap Prisma for any database without changing business logic
+- ✅ **Separation of Concerns:** Each layer has single, clear responsibility
+- ✅ **Type Safety:** Full TypeScript coverage across all layers
+
+### **Key Learning: Solid Implementation**
+
+This implementation demonstrates **solid** hexagonal architecture where:
+
+- Domain defines contracts (interfaces)
+- Application uses contracts (business logic)
+- Infrastructure implements contracts (technical details)
+- Dependency injection wires everything together cleanly
+
+**Result:** Maintainable, testable, and flexible codebase that follows SOLID principles.
