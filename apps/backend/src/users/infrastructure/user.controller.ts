@@ -1,7 +1,17 @@
-import { CreateUserDto, User } from '@auth-system/types'
-import { Body, Controller, Get, Logger, Post } from '@nestjs/common'
+import { CreateUserDto } from '@auth-system/types'
+import {
+  BadRequestException,
+  Body,
+  ConflictException,
+  Controller,
+  Get,
+  Logger,
+  Post
+} from '@nestjs/common'
 
 import { UserService } from '~/users/application'
+import { User } from '~/users/domain/entities/user.entity'
+import { InvalidEmailError, UserAlreadyExistsError } from '~/users/domain/errors/user.errors'
 
 @Controller('users')
 export class UserController {
@@ -13,26 +23,30 @@ export class UserController {
   @Get()
   async getUsers(): Promise<User[]> {
     const users = await this.userService.getUsers()
+
     this.logger.log('users from controller', users)
 
     return users
   }
 
-  // TODO: remove this endpoint
-  @Get('auth')
-  getAuthUser() {
-    const authUser = this.userService.getAuthUser()
-    this.logger.log('authUser from controller', authUser)
-
-    return authUser
-  }
-
   // For demo purposes
   @Post('create')
   async createUser(@Body() user: CreateUserDto): Promise<User> {
-    const newUser = await this.userService.createUser(user)
-    this.logger.log('newUser from controller', newUser)
+    try {
+      const newUser = await this.userService.createUser(user)
+      this.logger.log('newUser from controller', newUser)
 
-    return newUser
+      return newUser
+    } catch (error) {
+      if (error instanceof InvalidEmailError) {
+        throw new BadRequestException(error.message)
+      }
+
+      if (error instanceof UserAlreadyExistsError) {
+        throw new ConflictException(error.message)
+      }
+
+      throw error
+    }
   }
 }

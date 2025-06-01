@@ -1,9 +1,9 @@
 import type { CreateUserDto } from '@auth-system/types'
 
-import type { IUser } from '~/shared/domain'
+import type { User } from '~/users/domain/entities/user.entity'
 
 // For demo purposes
 export interface IUserRepository {
-  getUsers(): Promise<IUser[]>
-  createUser(user: CreateUserDto): Promise<IUser>
+  getUsers(): Promise<User[]>
+  createUser(user: CreateUserDto): Promise<User>
 }
