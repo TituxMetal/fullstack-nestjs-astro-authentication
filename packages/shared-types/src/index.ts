@@ -1,13 +1,6 @@
-// Shared types for the authentication system
+// Shared types for API contracts between frontend and backend
 
-// User-related types
-export interface User {
-  id: string
-  email: string
-  createdAt: Date
-  updatedAt: Date
-}
-
+// API Request DTOs
 export interface CreateUserDto {
   email: string
   password: string
@@ -22,7 +15,7 @@ export interface UpdateProfileDto {
   email?: string
 }
 
-// API Response types
+// API Response Types
 export interface ApiResponse<T = unknown> {
   success: boolean
   data?: T
@@ -30,7 +23,7 @@ export interface ApiResponse<T = unknown> {
   error?: string
 }
 
-// Authentication types
+// Authentication Types
 export interface AuthTokens {
   accessToken: string
   refreshToken?: string
@@ -39,4 +32,12 @@ export interface AuthTokens {
 export interface AuthUser {
   id: string
   email: string
+}
+
+// User Response (for API)
+export interface UserResponse {
+  id: string
+  email: string
+  createdAt: string // ISO string
+  updatedAt: string // ISO string
 }
