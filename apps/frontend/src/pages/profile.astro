@@ -4,10 +4,15 @@ import type { AuthUser } from '@auth-system/types'
 import MainLayout from '~layouts/MainLayout.astro'
 import { Welcome } from '~ui/Welcome'
 
-const user: AuthUser = {
-  id: '1',
-  email: 'john.doe@example.com'
-}
+// TODO: For demo purposes, remove this when starting to really implement the auth system
+const response = await fetch('http://localhost:3000/users')
+const users = await response.json()
+const user =
+  users[0] ??
+  ({
+    id: '1',
+    email: 'john.doe@example.com'
+  } as AuthUser)
 
 const title = 'Basic Profile Page'
 const mode = Astro.url.searchParams.get('mode') ?? 'display'

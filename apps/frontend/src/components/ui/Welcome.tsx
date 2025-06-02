@@ -1,9 +1,9 @@
-import type { AuthUser, User } from '@auth-system/types'
+import type { AuthUser, UserResponse } from '@auth-system/types'
 
 interface WelcomeUserProps {
   title: string
   pageDescription?: string
-  user?: User | AuthUser
+  user?: UserResponse | AuthUser
   children?: React.ReactNode
 }
 
@@ -21,7 +21,7 @@ export const Welcome = ({ title, user, pageDescription, children }: WelcomeUserP
       {user && (
         <section className='flex flex-col gap-2'>
           <h2 className='mb-4 text-xl font-bold'>User Data</h2>
-          <code className='ml-4 flex max-w-md flex-col gap-2'>
+          <code className='ml-4 flex max-w-lg flex-col gap-2'>
             <pre className='rounded-md bg-zinc-800 p-4'>{JSON.stringify(user, null, 2)}</pre>
           </code>
         </section>
