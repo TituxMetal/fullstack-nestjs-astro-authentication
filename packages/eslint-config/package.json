@@ -6,9 +6,9 @@
   "type": "commonjs",
   "main": "src/index.js",
   "exports": {
-    ".": "./src/index.js",
-    "./nestjs": "./src/nestjs.js",
-    "./astro": "./src/astro.js"
+    "./base": "./src/base.js",
+    "./node": "./src/node.js",
+    "./web": "./src/web.js"
   },
   "files": [
     "src"

@@ -9,6 +9,6 @@ const compat = new FlatCompat({
 
 module.exports = [
   ...compat.config({
-    extends: ['@auth-system/eslint-config/astro']
+    extends: ['@auth-system/eslint-config/web']
   })
 ]

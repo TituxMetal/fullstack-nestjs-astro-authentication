@@ -5,12 +5,14 @@
   "description": "Shared TypeScript configuration for the authentication system monorepo",
   "main": "tsconfig.json",
   "exports": {
-    ".": "./tsconfig.json",
-    "./base": "./tsconfig.base.json"
+    "./base": "./tsconfig.base.json",
+    "./node": "./tsconfig.node.json",
+    "./web": "./tsconfig.web.json"
   },
   "files": [
-    "tsconfig.json",
-    "tsconfig.base.json"
+    "tsconfig.base.json",
+    "tsconfig.node.json",
+    "tsconfig.web.json"
   ],
   "dependencies": {
     "typescript": "^5.8.3"

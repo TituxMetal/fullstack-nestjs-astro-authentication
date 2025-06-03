@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { describe, it } from 'vitest'
+
 import { Welcome } from '~ui/Welcome'
 
 describe('Welcome component', () => {
