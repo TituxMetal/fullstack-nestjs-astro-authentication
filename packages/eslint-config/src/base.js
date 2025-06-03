@@ -1,16 +1,8 @@
 // @ts-check
 
 module.exports = {
-  extends: [
-    'plugin:astro/recommended',
-    'plugin:astro/jsx-a11y-recommended',
-    'plugin:prettier/recommended'
-  ],
   parser: '@typescript-eslint/parser',
-  parserOptions: {
-    project: 'tsconfig.json',
-    sourceType: 'module'
-  },
+  parserOptions: { project: 'tsconfig.json', sourceType: 'module' },
   plugins: ['import', '@typescript-eslint/eslint-plugin', 'prettier'],
   rules: {
     'arrow-body-style': ['error', 'as-needed'],
@@ -38,37 +30,23 @@ module.exports = {
     'import/order': [
       'error',
       {
-        alphabetize: {
-          order: 'asc',
-          caseInsensitive: true
-        },
-        groups: [['builtin', 'external'], 'internal', 'parent', 'sibling'],
+        alphabetize: { order: 'asc', caseInsensitive: true },
+        groups: ['builtin', 'external', 'internal', 'parent', 'sibling'],
         'newlines-between': 'always',
         pathGroups: [
-          {
-            pattern: '@auth-system/**',
-            group: 'internal'
-          },
-          {
-            pattern: '~/**',
-            group: 'parent'
-          }
+          { pattern: 'node:*', group: 'builtin' },
+          { pattern: '@auth-system/**', group: 'external' },
+          { pattern: '~/**', group: 'internal', position: 'after' }
         ],
         pathGroupsExcludedImportTypes: ['builtin']
       }
+    ],
+    'import/newline-after-import': [
+      'error',
+      {
+        count: 1,
+        considerComments: true
+      }
     ]
-  },
-  ignorePatterns: ['astro.config.mjs', 'eslint.config.cjs', 'dist/**', 'coverage/**', '.turbo/**'],
-  overrides: [
-    {
-      files: ['*.astro'],
-      parser: 'astro-eslint-parser',
-      parserOptions: {
-        parser: '@typescript-eslint/parser',
-        extraFileExtensions: ['.astro'],
-        project: './tsconfig.json'
-      },
-      rules: {}
-    }
-  ]
+  }
 }

@@ -1,4 +1,4 @@
-import { CreateUserDto } from '@auth-system/types'
+import type { CreateUserDto } from '@auth-system/types'
 import {
   BadRequestException,
   Body,

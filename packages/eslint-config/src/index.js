@@ -1,4 +1,5 @@
 module.exports = {
-  astro: require('./astro.js'),
-  nestjs: require('./nestjs.js')
+  base: require('./base.js'),
+  node: require('./node.js'),
+  web: require('./web.js')
 }
