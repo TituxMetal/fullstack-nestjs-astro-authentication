@@ -70,7 +70,14 @@ yarn workspace @auth-system/backend prisma generate
 yarn workspace @auth-system/backend prisma migrate dev
 ```
 
-### 5. Start Development Servers
+### 5. Validate Setup
+
+```bash
+# Run the validation script to ensure everything is working
+./scripts/validate-setup.sh
+```
+
+### 6. Start Development Servers
 
 ```bash
 # Start both backend and frontend in development mode
@@ -120,6 +127,9 @@ yarn type-check                 # Type check all workspaces
 # Quality Assurance
 yarn clean                      # Clean all build artifacts
 yarn reset                      # Clean and reinstall dependencies
+
+# Validation
+./scripts/validate-setup.sh     # Validate complete development setup
 ```
 
 ### Backend Scripts
