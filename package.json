@@ -32,10 +32,15 @@
     "format:check": "prettier --check .",
     "clean": "turbo run clean && rm -rf .turbo",
     "reset": "yarn clean && rm -rf node_modules && yarn install",
-    "prepare": "husky"
+    "prepare": "husky",
+    "commit": "cz"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@types/node": "^22.15.29",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.28.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.0",
@@ -62,5 +67,10 @@
     "**/*.{json,md,yml,yaml}": [
       "prettier --write"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
