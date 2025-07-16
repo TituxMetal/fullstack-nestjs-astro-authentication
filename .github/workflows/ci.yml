@@ -33,6 +33,10 @@ jobs:
         with:
           cache: 'yarn'
 
+      # The node:bookworm-slim container is minimal and needs extra dependencies for our tools.
+      - name: Install System Dependencies
+        run: apt-get update && apt-get install -y jq openssl
+
       - name: Cache Turborepo artifacts
         uses: actions/cache@v4
         with:
@@ -78,9 +82,9 @@ jobs:
         with:
           cache: 'yarn'
 
-      # The node:bookworm-slim container does not include jq by default.
-      - name: Install jq
-        run: apt-get update && apt-get install -y jq
+      # The node:bookworm-slim container is minimal and needs extra dependencies for our tools.
+      - name: Install System Dependencies
+        run: apt-get update && apt-get install -y jq openssl
 
       - name: Install Dependencies
         run: yarn install --immutable
