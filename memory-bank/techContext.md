@@ -67,8 +67,14 @@
 
 - **ESLint:** Code linting
 - **Prettier:** Code formatting
+- **commitlint:** Conventional commit enforcement
+- **Commitizen:** Guided commit message creation
 - **Husky:** Git hooks
 - **lint-staged:** Pre-commit linting
+
+#### Versioning & Release
+
+- **Changesets:** Monorepo-aware versioning and changelog generation
 
 #### Build & Deployment
 
@@ -263,4 +269,6 @@ project-root/
 - Automated testing on PR
 - Type checking validation
 - Build verification
+- Automated code coverage reporting via pull request comments
+- Automated dependency vulnerability scanning
 - Deployment automation
