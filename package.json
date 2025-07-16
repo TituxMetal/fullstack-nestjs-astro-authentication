@@ -33,9 +33,13 @@
     "clean": "turbo run clean && rm -rf .turbo",
     "reset": "yarn clean && rm -rf node_modules && yarn install",
     "prepare": "husky",
-    "commit": "cz"
+    "commit": "cz",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "turbo run build --filter=./packages/* && changeset publish"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.29.5",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@types/node": "^22.15.29",
