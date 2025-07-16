@@ -1,0 +1,103 @@
+# .github/workflows/ci.yml
+
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    name: Validate Project
+    runs-on: ubuntu-latest
+
+    container:
+      # Use an official Node.js image based on Debian 12, ensuring
+      # our CI environment matches production.
+      image: node:22-bookworm-slim
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js Caching
+        # This step handles caching the global Yarn cache directory.
+        uses: actions/setup-node@v4
+        with:
+          cache: 'yarn'
+
+      # Explicitly enable Corepack to ensure it uses the Yarn version from package.json
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Cache Turborepo artifacts
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: debian-turbo-${{ github.sha }}
+          restore-keys: |
+            debian-turbo-
+
+      - name: Install Dependencies
+        # Installs dependencies for all workspaces in the monorepo.
+        run: yarn install --immutable
+
+      - name: Run Validation Checks
+        run: |
+          yarn format:check
+          yarn lint:check
+          yarn type-check
+          yarn npm audit
+          yarn test
+          yarn build
+
+  coverage:
+    name: Code Coverage
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    container:
+      image: node:22-bookworm-slim
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js Caching
+        uses: actions/setup-node@v4
+        with:
+          cache: 'yarn'
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Restore Turborepo cache
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: debian-turbo-${{ github.sha }}
+          restore-keys: |
+            debian-turbo-
+
+      - name: Install Dependencies
+        run: yarn install --immutable
+
+      - name: Run test:coverage
+        run: yarn test:coverage
+
+      - name: Post Coverage Comment
+        uses: MishaKav/jest-coverage-comment@main
+        with:
+          title: Code Coverage
+          summary-title: Test Coverage Summary
+          # Add paths to both coverage reports
+          coverage-path: |
+            ./apps/backend/coverage/coverage-summary.json
+            ./apps/frontend/coverage/coverage-summary.json

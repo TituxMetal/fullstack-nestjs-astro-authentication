@@ -30,6 +30,7 @@
     "type-check": "turbo run type-check",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "audit": "yarn audit",
     "clean": "turbo run clean && rm -rf .turbo",
     "reset": "yarn clean && rm -rf node_modules && yarn install",
     "prepare": "husky",
