@@ -6,16 +6,17 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A modern fullstack authentication system built with NestJS backend and Astro frontend, featuring
-hexagonal architecture, JWT authentication, and comprehensive testing infrastructure.
+**Clean Architecture principles**, JWT authentication, and comprehensive testing infrastructure.
 
 ## 🚀 Technology Stack
 
 ### Backend
 
-- **NestJS** - Progressive Node.js framework with hexagonal architecture
+- **NestJS** - Progressive Node.js framework with Clean Architecture implementation
 - **Prisma** - Type-safe database ORM with SQLite
-- **JWT** - Cookie-based authentication with Argon2 password hashing
-- **Jest** - Comprehensive unit testing framework
+- **JWT** - Custom JWT implementation with HTTP-only cookies (NO Passport.js)
+- **Argon2** - Industry-standard password hashing
+- **Jest** - Comprehensive unit and integration testing
 
 ### Frontend
 
@@ -35,7 +36,7 @@ hexagonal architecture, JWT authentication, and comprehensive testing infrastruc
 ## 📋 Prerequisites
 
 - **Node.js** v22.15.1 or higher
-- **Yarn** v4.9.1 or higher
+- **Yarn** v4.9.1 or higher (managed via Corepack)
 - **Git** for version control
 
 ## 🛠️ Getting Started
@@ -90,13 +91,17 @@ yarn workspace @auth-system/frontend dev   # Frontend on http://localhost:4321
 
 ## 📁 Project Structure
 
-```
+```tree
 ├── apps/
 │   ├── backend/                 # NestJS backend application
 │   │   ├── prisma/             # Database schema and migrations
 │   │   └── src/
+│   │       ├── auth/           # Authentication module (Clean Architecture)
+│   │       │   ├── domain/     # Entities, value objects, interfaces
+│   │       │   ├── application/# Use cases and services
+│   │       │   └── infrastructure/ # Controllers, repositories, JWT
 │   │       ├── shared/         # Shared infrastructure and domain
-│   │       └── users/          # User domain module
+│   │       └── users/          # Legacy user module (to be removed)
 │   └── frontend/               # Astro frontend application
 │       ├── public/             # Static assets
 │       └── src/
@@ -108,7 +113,14 @@ yarn workspace @auth-system/frontend dev   # Frontend on http://localhost:4321
 │   ├── eslint-config/          # Shared ESLint configuration
 │   ├── shared-types/           # Cross-workspace TypeScript types
 │   └── ts-config/              # Shared TypeScript configuration
-└── memory-bank/                # Project documentation and context
+└── docs/                       # Project documentation
+    ├── backend-architecture.md # Backend Clean Architecture overview
+    ├── backend-security.md     # Security implementation patterns
+    ├── api-specification.md    # REST API contracts and examples
+    ├── frontend-architecture.md# Frontend architecture
+    ├── frontend-spec.md        # Frontend specifications
+    ├── prd.md                  # Product Requirements (source of truth)
+    └── shards/                 # Story planning and implementation
 ```
 
 ## 🔧 Available Scripts
@@ -171,9 +183,9 @@ yarn workspace @auth-system/frontend test:watch
 
 ### Test Structure
 
-- **Backend**: Jest with comprehensive unit tests for domain entities, use cases, and infrastructure
+- **Backend**: Jest with unit tests (domain/application) and integration tests (infrastructure)
 - **Frontend**: Vitest with React component testing and integration tests
-- **Coverage**: Test coverage reports available for both applications
+- **Coverage**: High test coverage requirements (100% domain, 90%+ application, 80%+ infrastructure)
 
 ## 🔄 Development Workflow
 
@@ -224,7 +236,7 @@ nvm use 22.15.1
 yarn --version
 
 # Should be v4.9.1 (specified in packageManager)
-# Yarn is managed by packageManager field in package.json
+# Yarn is managed by Corepack and packageManager field in package.json
 ```
 
 #### Database Issues
@@ -259,28 +271,85 @@ yarn workspace @auth-system/ts-config build
 
 ### Getting Help
 
-1. Check the [SPEC.md](./SPEC.md) for detailed technical documentation
-2. Review the `memory-bank/` folder for project context and decisions
-3. Check existing issues in the GitHub repository
-4. Ensure all prerequisites are correctly installed
+1. Check the [documentation](#-documentation) for detailed technical information
+2. Review existing issues in the GitHub repository
+3. Ensure all prerequisites are correctly installed
 
 ## 📚 Documentation
 
-- **[SPEC.md](./SPEC.md)** - Technical specifications and architecture details
-- **[memory-bank/](./memory-bank/)** - Project context, decisions, and progress tracking
+### Architecture & Implementation
+
+- **[backend-architecture.md](./docs/backend-architecture.md)** - Clean Architecture overview and
+  design patterns
+- **[backend-security.md](./docs/backend-security.md)** - Security implementation and best practices
+- **[api-specification.md](./docs/api-specification.md)** - Complete REST API contracts and examples
+
+### Frontend & UX
+
+- **[frontend-architecture.md](./docs/frontend-architecture.md)** - Frontend architecture with Astro
+  and React
+- **[frontend-spec.md](./docs/frontend-spec.md)** - UI/UX specifications and design system
+
+### Project Management
+
+- **[prd.md](./docs/prd.md)** - Product Requirements Document (source of truth)
+- **[shards/](./docs/shards/)** - Story planning and implementation tracking
 
 ## 🎯 Project Status
 
-This project is currently in the **Foundation Phase** with the following completed:
+This project is currently in the **Authentication Implementation Phase** with the following
+completed:
+
+### ✅ Completed Features
 
 - ✅ Environment setup and monorepo structure
 - ✅ TypeScript and linting infrastructure
 - ✅ Framework initialization (NestJS + Astro)
 - ✅ Git hooks and development workflow
-- 🚧 Project documentation (in progress)
+- ✅ **Backend authentication system foundation**
+  - ✅ Clean Architecture structure (domain/application/infrastructure)
+  - ✅ User registration and login endpoints
+  - ✅ JWT token generation and validation
+  - ✅ Role-based access control (USER/ADMIN)
+  - ✅ Basic testing suite
+- ✅ **Complete documentation architecture**
 
-Next phases will focus on implementing the authentication system with user registration, login, and
-JWT token management.
+### 🚧 In Progress
+
+- 🚧 **Security implementation** (Argon2 hashing, HTTP-only cookies, rate limiting)
+- 🚧 Frontend authentication integration
+- 🚧 Production deployment setup
+- 🚧 End-to-end testing
+
+### 📋 Next Steps
+
+- **Complete Story 1.3**: Add Argon2 password hashing and HTTP-only JWT cookies
+- Frontend authentication forms and state management
+- Docker containerization for production (needs story planning)
+- CI/CD pipeline setup
+
+## 🔐 Authentication Features
+
+The authentication system foundation includes:
+
+- **Registration & Login**: Email validation and JWT token generation
+- **Role-Based Access**: USER and ADMIN roles with guard protection
+- **Clean Architecture**: Domain-driven design with strict layer separation
+
+### 🔧 Security Features In Progress
+
+- **Password Security**: Argon2 hashing implementation (Story 1.3)
+- **JWT Cookies**: HTTP-only cookies with 24-hour expiration (Story 1.3)
+- **Rate Limiting**: Brute force protection on authentication endpoints (Story 1.3)
+
+### API Endpoints
+
+- `POST /auth/register` - User registration
+- `POST /auth/login` - User authentication
+- `POST /auth/logout` - Session termination
+- `GET /auth/me` - Current user profile
+
+See [api-specification.md](./docs/api-specification.md) for complete API documentation.
 
 ## 📄 License
 
