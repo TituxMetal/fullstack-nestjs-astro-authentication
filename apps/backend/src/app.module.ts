@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 
-import { AuthModule } from '~/auth/infrastructure/auth.module'
+import { AuthModule } from '~/auth/infrastructure'
 import { DatabaseModule } from '~/shared/infrastructure'
-import { UserModule } from '~/users'
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), DatabaseModule, AuthModule, UserModule]
+  imports: [ConfigModule.forRoot({ isGlobal: true }), AuthModule, DatabaseModule],
+  controllers: [],
+  providers: []
 })
 export class AppModule {}
