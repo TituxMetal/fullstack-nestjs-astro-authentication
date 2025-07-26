@@ -102,8 +102,8 @@ requests into domain operations. Key concepts:
 **Testing Results:**
 
 - POST /auth/register → 201 Created + JWT cookie
-- POST /auth/login → 201 Created + JWT cookie
-- POST /auth/logout → 201 Created + cookie cleared
+- POST /auth/login → 200 OK + JWT cookie
+- POST /auth/logout → 200 OK + cookie cleared
 - GET /auth/me → 200 OK (authenticated) / 401 Unauthorized
 
 **Security Features:**
